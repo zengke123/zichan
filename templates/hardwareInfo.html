@@ -58,10 +58,10 @@
         <div class="container-fluid">
             <div class="row-fluid">
             <div class="span12">
-            <table id="datalisttable" class="table table-hover">
+            <table id="datalisttable" class="table table-condensed">
             <thead>
               <tr>
-              <th><input id="selectcheck" type="checkbox" onclick=""></th>
+              <!--th><input id="selectcheck" type="checkbox" onclick=""></th-->
               <th>平台</th>
               <th>集群</th>
               <th>主机</th>
@@ -94,90 +94,103 @@
         <h4 class="modal-title" id="myModalLabel">修改</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="addForm">
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">平台</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="platform">
+                <input type="text" class="form-control" id="platform" name="platform">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">集群</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="cluster">
+                <input type="text" class="form-control" id="cluster" name="cluster">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">主机</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="hostname">
+                <input type="text" class="form-control" id="hostname" name="hostname">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">设备类型</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="device_type">
+                <input type="text" class="form-control" id="device_type" name="device_type">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">设备厂家</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="manufacturer">
+                <input type="text" class="form-control" id="manufacturer" name="manufacturer">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">设备型号</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="device_model">
+                <input type="text" class="form-control" id="device_model" name="device_model">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">序列号</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="serial">
+                <input type="text" class="form-control" id="serial" name="serial">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">机房</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="engine_room">
+                <input type="text" class="form-control" id="engine_room" name="engine_room">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">机架</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="frame_number">
+                <input type="text" class="form-control" id="frame_number" name="frame_number">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">电源柜</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="power_frame_number">
+                <input type="text" class="form-control" id="power_frame_number" name="power_frame_number">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">入网时间</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="net_time">
+                <input type="text" class="form-control" id="net_time" name="net_time">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">过保时间</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="period">
+                <input type="text" class="form-control" id="period" name="period">
                 </div>
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-sm-2 control-label">状态</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="status">
+                <input type="text" class="form-control" id="status" name="status">
                 </div>
             </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="SAVE">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myDelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        确定删除
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+        <button type="button" class="btn btn-primary" id="DEL">是</button>
       </div>
     </div>
   </div>
@@ -227,7 +240,7 @@
                 if(data["flag"]==="success"){
                     $("#tablevalue").empty();
                     $.each(data["hosts"], function(idx,obj){
-	                var temp="<tr><td><input type=\"checkbox\" name=\"lineIndex\" value=\"0\"></td>"+
+	                var temp="<tr><!--td><input type=\"checkbox\" name=\"lineIndex\" value=\"0\"></td-->"+
                         "<td>"+obj.platform+"</td>"+
                         "<td>"+obj.cluster+"</td>"+
                         "<td>"+obj.hostname+"</td>"+
@@ -241,7 +254,9 @@
                         "<td>"+obj.net_time+"</td>"+
                         "<td>"+obj.period+"</td>"+
                         "<td>"+obj.status+"</td>"+
-                        "<td><button type=\"button\" class=\"btn btn-primary btn-xs\" data-toggle=\"modal\" data-target=\"#myModal\" data-whatever=\""+obj.id+"\">修改</button></td>" +
+                        "<td><button type=\"button\" class=\"btn btn-primary btn-xs\" data-toggle=\"modal\" data-target=\"#myModal\" data-whatever=\""+obj.id+"\">修改</button>"+
+                            "<button type=\"button\" class=\"btn btn-danger btn-xs\" data-toggle=\"modal\" data-target=\"#myDelModal\" data-whatever=\""+obj.id+"\">删除</button>"+
+                        "</td>" +
                         "</tr>";
 	                $("#tablevalue").append(temp)
                      });
@@ -257,7 +272,7 @@
         var button = $(event.relatedTarget);
         var id_no = button.data('whatever');
         var modal = $(this);
-        modal.find('.modal-title').text('修改' + id_no);
+        modal.find('.modal-title').text("设备ID:"+id_no);
         $.ajax({   //2、发送给后端
             url: "{{ url_for('get_detail_id') }}",
             type: 'POST',
@@ -284,7 +299,29 @@
             }
         });
 
-    })
+    });
+
+    $("#SAVE").click(function () {
+        var device_id = $(".modal-title").text();
+        var formSerial = {};
+        formSerial["id"] = device_id;
+		 $($("#addForm").serializeArray()).each(function(){
+		    formSerial[this.name] = this.value;
+		 });
+        $.ajax({
+            url: "{{ url_for('add_by_id') }}",
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(formSerial),
+            dataType: "json",
+            success: function (data) {
+
+            }
+
+        });
+
+
+    });
 
 
 

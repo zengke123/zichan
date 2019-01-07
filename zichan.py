@@ -60,7 +60,6 @@ def get_detail():
         "flag": "success",
         "hosts": datas
     }
-    print(hosts)
     return jsonify(result)
 
 
@@ -73,6 +72,15 @@ def get_detail_id():
         "hosts": host_info.to_json()
     }
     return jsonify(result)
+
+
+@app.route('/add_by_id', methods=["GET", "POST"])
+def add_by_id():
+    datas = request.get_json()
+    print(datas)
+    print(type(datas))
+    return "success"
+
 
 
 @app.route('/capacity')
