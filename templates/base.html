@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}"/>
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" style="color: #fffbfc"><span class="glyphicon glyphicon-object-align-top" aria-hidden="true"></span> 设备管理系统</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">资产查询<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for("hardware") }}">硬件信息</a></li>
+            <li><a href="{{ url_for("software") }}">软件信息</a></li>
+            <li><a href="{{ url_for("capacity") }}">系统容量</a></li>
+            <li><a href="{{ url_for("custom") }}">自定义查询</a></li>
+          </ul>
+        </li>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">批量导入</a></li>
+              <li><a href="#">批量导出</a></li>
+          </ul>
+        </li>
+          <li><a href="#">配置</a></li>
+      </ul>
+           <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></button>
+      </form>
+
+    </div>
+  </div>
+</nav>
+
+{% block body %}{% endblock %}
+
+
+</body>
+
+</html>
