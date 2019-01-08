@@ -74,13 +74,32 @@ def get_detail_id():
     return jsonify(result)
 
 
-@app.route('/add_by_id', methods=["GET", "POST"])
-def add_by_id():
+@app.route('/modify_by_id', methods=["GET", "POST"])
+def modify_by_id():
     datas = request.get_json()
-    print(datas)
-    print(type(datas))
-    return "success"
+    try:
+        id = datas.get('id')
+        db.session.query(Host).filter(Host.id == id).update(datas)
+        db.session.commit()
+    except Exception as e:
+        print(str(e))
+    # request中要求的数据格式为json，为其他会导致前端执行success不成功
+    result = {"flag": "success"}
+    return jsonify(result)
 
+
+@app.route('/delete_by_id', methods=["GET", "POST"])
+def delete_by_id():
+    id = request.form.get('id')
+    try:
+        to_delete = Host.query.filter(Host.id == id).first()
+        db.session.delete(to_delete)
+        db.session.commit()
+        result = {"flag": "success"}
+    except Exception as e:
+        print(str(e))
+        result = {"flag": "fail"}
+    return jsonify(result)
 
 
 @app.route('/capacity')
@@ -98,14 +117,7 @@ def custom():
     return render_template('customInfo.html')
 
 
-@app.route('/modify/<id>')
-def modify(id):
-    return "success"
 
-
-@app.route('/delete/<id>')
-def delete(id):
-    return "success"
 
 
 
