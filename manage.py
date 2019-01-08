@@ -2,7 +2,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from zichan import app
 from web_init import db
-from models import Host
+from models import Host, Capacity
 
 # init 初始化，第一次使用
 # python manage.py db init

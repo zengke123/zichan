@@ -37,7 +37,7 @@ class Host(db.Model):
     account = db.Column(db.String(32), nullable=True)
     version = db.Column(db.String(64), nullable=True)
     software_version = db.Column(db.String(64), nullable=True)
-    ip = db.Column(db.String(64), nullable=True)
+    local_ip = db.Column(db.String(64), nullable=True)
     nat_ip = db.Column(db.String(64), nullable=True)
     os_version = db.Column(db.String(64), nullable=True)
     engine_room = db.Column(db.String(64), nullable=True)
@@ -60,7 +60,7 @@ class Host(db.Model):
                 "account": self.account,
                 "version": self.version,
                 "software_version": self.software_version,
-                "ip": self.ip,
+                "local_ip": self.local_ip,
                 "nat_ip": self.nat_ip,
                 "os_version": self.os_version,
                 "engine_room": self.engine_room,
@@ -70,3 +70,25 @@ class Host(db.Model):
                 "period": self.period,
                 "status": self.status
                 }
+
+
+class Capacity(db.Model):
+    __tablename__ = 'capacity'
+    id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
+    platform = db.Column(db.String(32), index=True, nullable=False)
+    cluster = db.Column(db.String(32), index=True, unique=True, nullable=False)
+    h_capacity = db.Column(db.String(32), nullable=True)
+    h_caps = db.Column(db.String(32), nullable=True)
+    s_capacity = db.Column(db.String(32), nullable=True)
+    s_caps = db.Column(db.String(32), nullable=True)
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "platform": self.platform,
+            "cluster": self.cluster,
+            "h_capacity": self.h_capacity,
+            "h_caps": self.h_caps,
+            "s_capacity": self.s_capacity,
+            "s_caps": self.s_caps
+        }
