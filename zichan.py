@@ -15,11 +15,15 @@ def index():
 
 @app.route('/hardware')
 def hardware():
+    show_cols = [('平台', 'platform'), ('集群', 'cluster'), ('主机', 'hostname'), ('设备类型', 'device_type'),
+                 ('设备厂家', 'manufacturer'), ('设备型号', 'device_model'), ('序列号', 'serial'),
+                 ('机房', 'engine_room'), ('机架', 'frame_number'), ('电源柜', 'power_frame_number'),
+                 ('入网时间', 'net_time'), ('过保时间', 'period'), ('状态', 'status')]
     platforms = db.session.query(distinct(Host.platform)).all()
     device_types = db.session.query(distinct(Host.device_type)).all()
     platform = [x[0] for x in platforms]
     device_type = [x[0] for x in device_types]
-    return render_template('hardwareInfo.html', platform=platform, device_type=device_type, hosts=None)
+    return render_template('hardwareInfo.html', platform=platform, device_type=device_type, show_cols=show_cols)
 
 
 @app.route('/get_cluster', methods=["GET", "POST"])
@@ -53,7 +57,7 @@ def get_detail():
     }
     kw = {k: v for k, v in kw_temp.items() if v}
     hosts = db.session.query(Host).filter_by(**kw).all()
-    datas=[]
+    datas = []
     for host in hosts:
         datas.append(host.to_json())
     result = {
@@ -65,8 +69,8 @@ def get_detail():
 
 @app.route('/get_detail_id', methods=["GET", "POST"])
 def get_detail_id():
-    id = request.form.get('id')
-    host_info = db.session.query(Host).filter(Host.id == id).one()
+    device_id = request.form.get('id')
+    host_info = db.session.query(Host).filter(Host.id == device_id).one()
     result = {
         "flag": "success",
         "hosts": host_info.to_json()
@@ -78,8 +82,8 @@ def get_detail_id():
 def modify_by_id():
     datas = request.get_json()
     try:
-        id = datas.get('id')
-        db.session.query(Host).filter(Host.id == id).update(datas)
+        device_id = datas.get('id')
+        db.session.query(Host).filter(Host.id == device_id).update(datas)
         db.session.commit()
     except Exception as e:
         print(str(e))
@@ -90,9 +94,9 @@ def modify_by_id():
 
 @app.route('/delete_by_id', methods=["GET", "POST"])
 def delete_by_id():
-    id = request.form.get('id')
+    device_id = request.form.get('id')
     try:
-        to_delete = Host.query.filter(Host.id == id).first()
+        to_delete = Host.query.filter(Host.id == device_id).first()
         db.session.delete(to_delete)
         db.session.commit()
         result = {"flag": "success"}
@@ -102,26 +106,19 @@ def delete_by_id():
     return jsonify(result)
 
 
-@app.route('/capacity')
-def capacity():
-    return render_template('capacityInfo.html')
-
-
 @app.route('/software')
 def software():
     return render_template('softwareInfo.html')
 
 
+@app.route('/capacity')
+def capacity():
+    return render_template('capacityInfo.html')
+
+
 @app.route('/custom')
 def custom():
     return render_template('customInfo.html')
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

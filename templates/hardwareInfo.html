@@ -62,19 +62,9 @@
             <thead>
               <tr>
               <!--th><input id="selectcheck" type="checkbox" onclick=""></th-->
-              <th>平台</th>
-              <th>集群</th>
-              <th>主机</th>
-              <th>设备类型</th>
-              <th>设备厂家</th>
-              <th>设备型号</th>
-              <th>序列号</th>
-              <th>机房</th>
-              <th>机架</th>
-              <th>电源柜</th>
-              <th>入网时间</th>
-              <th>过保时间</th>
-              <th>状态</th>
+              {% for col in show_cols %}
+                <th>{{ col[0] }}</th>
+               {% endfor %}
               <th>操作</th>
               </tr>
             </thead>
@@ -95,84 +85,14 @@
       </div>
       <div class="modal-body">
         <form class="form-horizontal" id="addForm">
+            {% for col in show_cols %}
             <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">平台</label>
+                <label for="recipient-name" class="col-sm-2 control-label">{{ col[0] }}</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="platform" name="platform">
+                <input type="text" class="form-control" id="{{ col[1] }}" name="{{ col[1] }}">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">集群</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="cluster" name="cluster">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">主机</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="hostname" name="hostname">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">设备类型</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="device_type" name="device_type">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">设备厂家</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="manufacturer" name="manufacturer">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">设备型号</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="device_model" name="device_model">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">序列号</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="serial" name="serial">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">机房</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="engine_room" name="engine_room">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">机架</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="frame_number" name="frame_number">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">电源柜</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="power_frame_number" name="power_frame_number">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">入网时间</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="net_time" name="net_time">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">过保时间</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="period" name="period">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-sm-2 control-label">状态</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="status" name="status">
-                </div>
-            </div>
+            {% endfor %}
         </form>
       </div>
       <div class="modal-footer">
